@@ -1,30 +1,22 @@
-from selene import have
-from selene.support.shared import browser
+from todomvc_tests import todo
 
 
 def test_common_todo_functionality():
-    browser.open('https://todomvc4tasj.herokuapp.com/')
-    browser.should(have.js_returned(True, "return $._data($('#clear-completed')[0], 'events').hasOwnProperty('click')"))
+    todo.visit()
 
-    browser.element('#new-todo').type('a').press_enter()
-    browser.element('#new-todo').type('b').press_enter()
-    browser.element('#new-todo').type('c').press_enter()
-    browser.all('#todo-list>li').should(have.exact_texts('a', 'b', 'c'))
+    todo.should_be_ready()
 
-    browser.all('#todo-list>li').element_by(have.exact_text('b')).double_click()
-    browser.all('#todo-list>li').element_by(have.css_class('editing'))\
-        .element('.edit').type(' edited').press_enter()
+    todo.create('a', 'b', 'c')
+    todo.assert_list('a', 'b', 'c')
 
-    browser.all('#todo-list>li').element_by(have.exact_text('b edited'))\
-        .element('.toggle').click()
+    todo.edit_submit('b', ' edited')
 
-    browser.element('#clear-completed').click()
-    browser.all('#todo-list>li').should(have.exact_texts('a', 'c'))
+    todo.complete('b edited')
 
-    browser.all('#todo-list>li').element_by(have.exact_text('c')).double_click()
-    browser.all('#todo-list>li').element_by(have.css_class('editing'))\
-        .element('.edit').type(' to be canceled').press_escape()
+    todo.clear_completed()
+    todo.assert_list('a', 'c')
 
-    browser.all('#todo-list>li').element_by(have.exact_text('c'))\
-        .hover().element('.destroy').click()
-    browser.all('#todo-list>li').should(have.exact_texts('a'))
+    todo.edit_cancel('c', ' to be canceled')
+
+    todo.delete('c')
+    todo.assert_list('a')
