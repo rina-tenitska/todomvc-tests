@@ -20,18 +20,18 @@ def assert_list(*todos: str):
     todo_list.should(have.exact_texts(*todos))
 
 
-def edit_start(todo: str, new_text):
+def start_editing(todo: str, new_text):
     todo_list.element_by(have.exact_text(todo)).double_click()
     return todo_list.element_by(have.css_class('editing')).element('.edit')\
         .perform(command.js.set_value(new_text))
 
 
-def edit_submit(todo: str, new_text):
-    edit_start(todo, new_text).press_enter()
+def edit(todo: str, new_text):
+    start_editing(todo, new_text).press_enter()
 
 
-def edit_cancel(todo: str, new_text):
-    edit_start(todo, new_text).press_escape()
+def cancel_editing(todo: str, new_text):
+    start_editing(todo, new_text).press_escape()
 
 
 def toggle(todo: str):
