@@ -1,4 +1,4 @@
-from todomvc_tests.model import todos
+from todomvc_tests.model.pages import todos
 
 
 def test_common_todo_functionality():
