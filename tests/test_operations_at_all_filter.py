@@ -43,8 +43,8 @@ def test_cancel_editing():
     todomvc.given_opened_with('a', 'b', 'c')
 
     todomvc.cancel_editing('b', 'to be canceled')
-    todomvc.should_have('a', 'b', 'c')
 
+    todomvc.should_have('a', 'b', 'c')
     todomvc.should_have_items_left(3)
 
 

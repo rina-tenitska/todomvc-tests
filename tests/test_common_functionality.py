@@ -2,7 +2,9 @@ from todomvc_tests.model import todomvc
 
 
 def test_todo_life_cycle():
-    todomvc.given_opened_with('a', 'b', 'c')
+    todomvc.given_opened_with()
+
+    todomvc.create('a', 'b', 'c')
 
     todomvc.should_have('a', 'b', 'c')
 
