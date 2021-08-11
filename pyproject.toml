@@ -10,6 +10,7 @@ selene = {version = "^2.*", allow-prereleases = true}
 pydantic = "^1.8.2"
 pytest-xdist = "^2.3.0"
 python-dotenv = "^0.18.0"
+allure-pytest = "^2.9.43"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"
