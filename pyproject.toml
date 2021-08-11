@@ -7,9 +7,12 @@ authors = ["Irina Tenitska <moore.evelyn13@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 selene = {version = "^2.*", allow-prereleases = true}
+pydantic = "^1.8.2"
+pytest-xdist = "^2.3.0"
+python-dotenv = "^0.18.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^6.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

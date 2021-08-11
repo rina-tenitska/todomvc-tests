@@ -1,4 +1,4 @@
-from selene import have, command
+from selene import have
 from selene.support.shared import browser
 
 
@@ -8,7 +8,7 @@ class TodoMvc:
 
     def open(self):
         browser.open('https://todomvc4tasj.herokuapp.com/')
-        app_loaded = "return $._data($('#clear-completed')[0], 'events')"\
+        app_loaded = "return $._data($('#clear-completed')[0], 'events')" \
                      ".hasOwnProperty('click')"
         browser.should(have.js_returned(True, app_loaded))
         return self
@@ -18,7 +18,7 @@ class TodoMvc:
             browser.element('#new-todo').type(todo).press_enter()
         return self
 
-    def given_opened_with(self, *todos: str):
+    def given_opened_with(self, *todos):
         self.open()
         self.create(*todos)
 
@@ -28,7 +28,7 @@ class TodoMvc:
 
     def start_editing(self, todo, new_text):
         self.todo_list.element_by(have.exact_text(todo)).double_click()
-        return self.todo_list.element_by(have.css_class('editing'))\
+        return self.todo_list.element_by(have.css_class('editing')) \
             .element('.edit').with_(set_value_by_js=True).set_value(new_text)
 
     def edit(self, todo, new_text):
@@ -44,16 +44,17 @@ class TodoMvc:
         return self
 
     def toggle(self, todo):
-        self.todo_list.element_by(have.exact_text(todo)).element('.toggle').click()
+        self.todo_list.element_by(have.exact_text(todo)).element(
+            '.toggle').click()
         return self
 
     def should_have_completed(self, *todos: str):
-        self.todo_list.filtered_by(have.css_class('completed'))\
+        self.todo_list.filtered_by(have.css_class('completed')) \
             .should(have.exact_texts(*todos))
         return self
 
     def should_have_active(self, *todos: str):
-        self.todo_list.filtered_by(have.no.css_class('completed'))\
+        self.todo_list.filtered_by(have.no.css_class('completed')) \
             .should(have.exact_texts(*todos))
         return self
 
@@ -66,13 +67,16 @@ class TodoMvc:
         return self
 
     def delete(self, todo: str):
-        self.todo_list.element_by(have.exact_text(todo)).hover()\
+        self.todo_list.element_by(have.exact_text(todo)).hover() \
             .element('.destroy').click()
         return self
 
     def should_have_items_left(self, count: int):
-        browser.element('#todo-count strong').should(have.exact_text(str(count)))
+        browser.element('#todo-count strong').should(
+            have.exact_text(str(count)))
         return self
 
     def should_be_empty(self):
         self.todo_list.should(have.size(0))
+
+
