@@ -5,7 +5,7 @@ description = ""
 authors = ["Irina Tenitska <moore.evelyn13@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 selene = {version = "^2.*", allow-prereleases = true}
 pydantic = "^1.8.2"
 pytest-xdist = "^2.3.0"
