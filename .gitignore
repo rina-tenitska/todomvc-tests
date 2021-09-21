@@ -72,3 +72,5 @@ $RECYCLE.BIN/
 *.lnk
 *.zip
 __pycache__
+allure-results/
+testplan.json

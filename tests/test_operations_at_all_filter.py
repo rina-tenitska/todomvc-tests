@@ -59,7 +59,7 @@ def test_complete():
 
 
 def test_activate():
-    todomvc.given_opened_with('a', 'b', 'c')
+    todomvc.given_opened_with('a', '.b', 'c')
     todomvc.toggle('b')
 
     todomvc.toggle('b')
