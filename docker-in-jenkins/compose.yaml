@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  pyenv-poetry:
+    build: .
+    image: pyenv-poetry
+    container_name: "pyenv-poetry"
+    volumes:
+      - ${PWD}:/todomvc-tests

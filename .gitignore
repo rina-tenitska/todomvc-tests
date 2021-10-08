@@ -73,4 +73,3 @@ $RECYCLE.BIN/
 *.zip
 __pycache__
 allure-results/
-testplan.json
