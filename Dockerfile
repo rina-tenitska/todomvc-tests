@@ -15,7 +15,7 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-
 COPY . /workdir
 WORKDIR /workdir
 RUN poetry install
-ARG context="remote"
+ENV context="remote"
 ARG ALLUREDIR="/allure-results"
 CMD poetry run pytest -n auto --alluredir=$ALLUREDIR
 
