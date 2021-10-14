@@ -2,19 +2,21 @@ version: '3'
 
 services:
   selenoid:
-    image: "aerokube/selenoid:1.10.0"
+    image: "aerokube/selenoid:latest-release"
     network_mode: bridge
+    container_name: "selenoid"
     restart: always
     ports:
       - 4444:4444
     volumes:
-      - "$PWD/etc/selenoid:/etc/selenoid/"
+      - "${PWD}/etc/selenoid:/etc/selenoid/"
       - "/var/run/docker.sock:/var/run/docker.sock"
     command: ["-conf", "/etc/selenoid/browsers.json", "-limit", "4"]
 
   selenoid-ui:
-    image: "aerokube/selenoid-ui:1.10.0"
+    image: "aerokube/selenoid-ui:latest-release"
     network_mode: bridge
+    container_name: "selenoid-ui"
     restart: always
     depends_on:
       - selenoid
@@ -27,6 +29,7 @@ services:
   jenkins:
     build: ./jenkins-image
     image: jenkins-with-docker
+    network_mode: bridge
     container_name: "jenkins"
     volumes:
       - "/var/jenkins_home"

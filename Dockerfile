@@ -12,8 +12,10 @@ ENV POETRY_HOME $HOME/.poetry
 ENV PATH="$PATH:$POETRY_HOME/bin"
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
 
-COPY . /todomvc-tests
-WORKDIR /todomvc-tests
-#RUN poetry install
-#ENV context='jenkins'
+COPY . /workdir
+WORKDIR /workdir
+RUN poetry install
+ARG context="remote"
+ARG ALLUREDIR="/allure-results"
+CMD poetry run pytest -n auto --alluredir=$ALLUREDIR
 

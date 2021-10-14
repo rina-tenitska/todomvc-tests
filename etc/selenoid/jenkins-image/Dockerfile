@@ -36,4 +36,4 @@ COPY email-html.template /var/jenkins_home/email-templates/
 
 # After starting container in command line run to give docker group necessary permissions:
 # docker exec --user root jenkins chgrp docker /var/run/docker.sock
-# docker exec --user root jenkins chown -R jenkins:jenkins /var/jenkins_home/workspace/
+# docker exec --user root jenkins chown -R jenkins:jenkins /var/jenkins_home/

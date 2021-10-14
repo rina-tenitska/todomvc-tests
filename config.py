@@ -3,7 +3,7 @@ from typing import Literal, Optional
 import pydantic
 
 
-EnvContext = Literal['local', 'prod', 'stage']
+EnvContext = Literal['local', 'prod', 'remote']
 BrowserName = Literal['chrome', 'firefox']
 
 
