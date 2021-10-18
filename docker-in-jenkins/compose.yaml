@@ -6,4 +6,4 @@ services:
       context: ../
       dockerfile: .
     container_name: "workspace"
-    network_mode: "container:[selenoid]"
+    network_mode: "container:selenoid"
