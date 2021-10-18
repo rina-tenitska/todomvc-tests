@@ -4,6 +4,6 @@ services:
   workspace:
     build:
       context: ../
-      dockerfile: .
+      dockerfile: ./docker-in-jenkins/Dockerfile
     container_name: "workspace"
     network_mode: "container:selenoid"
