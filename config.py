@@ -9,7 +9,7 @@ BrowserName = Literal['chrome', 'firefox']
 
 class Settings(pydantic.BaseSettings):
 
-    context: EnvContext = 'local'
+    context: EnvContext = 'remote'
 
     browser_name: BrowserName = 'chrome'
     browser_quit_after_each_test: bool = False

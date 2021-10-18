@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  workspace:
+    build:
+      context: ../
+      dockerfile: .
+    container_name: "workspace"
+    network_mode: "container:[selenoid]"
