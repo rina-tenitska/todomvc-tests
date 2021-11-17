@@ -4,17 +4,17 @@ from selene.support.shared import browser
 todos = browser.all("#todo-list>li")
 
 
-def test_todo_crud_management():
+def test_crud_tasks_management():
     given_app_opened_with("a", "b", "c")
     todos_should_be("a", "b", "c")
 
-    edit("b", "b edited")
+    edit_with_enter("b", "b edited")
 
     toggle("b edited")
     clear_completed()
     todos_should_be("a", "c")
 
-    cancel_edit("c", "c to be canceled")
+    cancel_edit_with_escape("c", "c to be canceled")
 
     delete("c")
     todos_should_be("a")
@@ -31,6 +31,32 @@ def test_filters_tasks():
     todos_should_be("b")
 
     filter_all()
+    todos_should_be("a", "b", "c")
+
+
+def test_adds_tasks():
+    given_app_opened_with("a", "b", "c")
+    todos_should_be("a", "b", "c")
+
+
+def test_edits_task_with_enter():
+    given_app_opened_with("a", "b", "c")
+
+    edit_with_enter("b", "b edited")
+    todos_should_be("a", "b edited", "c")
+
+
+def test_edits_tasks_with_tab():
+    given_app_opened_with("a", "b", "c")
+
+    edit_with_tab("b", "b edited")
+    todos_should_be("a", "b edited", "c")
+
+
+def test_cancels_edit_tasks_with_escape():
+    given_app_opened_with("a", "b", "c")
+
+    cancel_edit_with_escape("b", "b edited")
     todos_should_be("a", "b", "c")
 
 
@@ -58,12 +84,35 @@ def test_complete_tasks():
     completed_tasks_should_be("a", "b", "c")
 
 
+def test_un_completes_task():
+    given_app_opened_with("a", "b", "c")
+    toggle("b")
+
+    toggle("b")
+    completed_tasks_should_be_empty()
+
+
+def test_completes_all_tasks():
+    given_app_opened_with("a", "b", "c")
+
+    toggle_all()
+    completed_tasks_should_be("a", "b", "c")
+
+
 def test_un_complete_all_tasks():
     given_app_opened_with("a", "b", "c")
     toggle_all()
 
     toggle_all()
     completed_tasks_should_be_empty()
+
+
+def test_deletes_task():
+    given_app_opened_with("a", "b", "c")
+    toggle("b")
+
+    delete("b")
+    todos_should_be("a", "c")
 
 
 def test_clear_completed():
@@ -124,12 +173,16 @@ def start_editing(text, new_text):
         .element(".edit").with_(set_value_by_js=True).set_value(new_text)
 
 
-def edit(text, new_text):
+def edit_with_enter(text, new_text):
     start_editing(text, new_text).press_enter()
 
 
-def cancel_edit(text, new_text):
+def cancel_edit_with_escape(text, new_text):
     start_editing(text, new_text).press_escape()
+
+
+def edit_with_tab(text, new_text):
+    start_editing(text, new_text).press_tab()
 
 
 def delete(text):
