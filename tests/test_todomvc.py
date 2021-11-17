@@ -1,5 +1,4 @@
 from selene import be, have
-from selene.support.conditions.be import hidden, visible
 from selene.support.shared import browser
 
 todos = browser.all("#todo-list>li")
@@ -35,6 +34,57 @@ def test_filters_tasks():
     todos_should_be("a", "b", "c")
 
 
+def test_tasks_count():
+    given_app_opened_with("a", "b", "c")
+    tasks_count_should_be(3)
+
+    toggle("b")
+    tasks_count_should_be(2)
+
+    toggle_all()
+    tasks_count_should_be(0)
+
+    toggle_all()
+    tasks_count_should_be(3)
+
+
+def test_complete_tasks():
+    given_app_opened_with("a", "b", "c")
+
+    toggle("b")
+    completed_tasks_should_be("b")
+
+    toggle_all()
+    completed_tasks_should_be("a", "b", "c")
+
+
+def test_un_complete_all_tasks():
+    given_app_opened_with("a", "b", "c")
+    toggle_all()
+
+    toggle_all()
+    completed_tasks_should_be_empty()
+
+
+def test_clear_completed():
+    given_app_opened_with("a", "b", "c")
+    clear_completed_should(be.hidden)
+
+    toggle_all()
+    clear_completed_should(be.visible)
+
+    clear_completed()
+    clear_completed_should(be.hidden)
+
+
+def test_clear_complete_all_tasks():
+    given_app_opened_with("a", "b", "c")
+    toggle_all()
+
+    clear_completed()
+    todos_should_be_empty()
+
+
 def open():
     browser.open("http://todomvc4tasj.herokuapp.com")
     are_require_js_contexts_loaded = "return (Object.keys(require.s.contexts._.defined).length === 39"
@@ -45,7 +95,8 @@ def open():
 
 
 def given_app_opened():
-    browser.quit()
+    if browser.config._source.has_webdriver_started():
+        browser.clear_local_storage()
     open()
 
 
@@ -61,6 +112,10 @@ def add(*texts):
 
 def todos_should_be(*texts):
     todos.filtered_by(be.visible).should(have.exact_texts(*texts))
+
+
+def todos_should_be_empty():
+    todos.should(have.size(0))
 
 
 def start_editing(text, new_text):
@@ -85,8 +140,25 @@ def clear_completed():
     browser.element("#clear-completed").click()
 
 
+def clear_completed_should(is_visible):
+    browser.element("#clear-completed").should(is_visible)
+
+
+def completed_tasks_should_be_empty():
+    todos.filtered_by(have.css_class("completed")).should(be.empty)
+
+
+def completed_tasks_should_be(*texts):
+    todos.filtered_by(have.css_class("completed")) \
+        .should(have.exact_texts(*texts))
+
+
 def toggle(text):
     todos.element_by(have.exact_text(text)).element(".toggle").click()
+
+
+def toggle_all():
+    browser.element("#toggle-all").click()
 
 
 def filter_all():
@@ -99,3 +171,8 @@ def filter_active():
 
 def filter_completed():
     browser.element("[href='#/completed']").click()
+
+
+def tasks_count_should_be(tasks_count):
+    browser.element("#todo-count>strong").should(
+        have.exact_text(str(tasks_count)))
